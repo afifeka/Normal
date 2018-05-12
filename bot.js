@@ -8,6 +8,7 @@ var bot = new Discord.Client();
 bot.on("ready", function randomStatus() { 
     let status = [`Ketik -help Untuk Bantuan`, `Wumpy!`, `Quack!`, `On ${bot.guilds.size} Server`, `With ${bot.users.size} User`] 
     bot.user.setStatus('STREAMING'); 
+    bot.user.setUsername("iPresence☆");
     bot.user.setGame("Ketik -help Untuk Bantuan", 'https://twitch.tv/forcestopgm'); 
     console.log(`${bot.user.username} Sedang ONLINE!`); 
 });
