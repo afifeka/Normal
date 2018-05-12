@@ -5,18 +5,19 @@ const TOKEN = "NDQ0NDI0NzIzMDk1NjE3NTQ2.DdbuWA.gKBfkvAKHhe-G2Fa-_4rkrx3Zng"
 
 var bot = new Discord.Client(); 
 
+bot.on("ready", async () => {
+    console.log(`${bot.user.username} Kembali Online!`); 
+      function randomStatus() {
+          let status = [`Ketik ]help Untuk Bantuan`, `With ${bot.user.size} User!`, `On ${bot.guilds.size} Server!`]
+          let rstatus = Math.floor(Math.random() * status.length);
+          bot.user.setActivity(status[rstatus], {type: 'STREAMING' , url: 'https://www.twitch.tv/afif_123'});
+  
+      }; setInterval(randomStatus, 10000)
+});
+
 bot.on('disconnect', async () => console.log('Saya sedang terputus dari jaringan, sedang menghubungkan...'));
 
 bot.on('reconnecting', async () => console.log('Sukses Menghubungkan Kembali!'));
-
-
-bot.on("ready", function randomStatus() { 
-    let status = [`Ketik ]help Untuk Bantuan`, `Wumpy!`, `Quack!`, `On ${bot.guilds.size} Server`, `With ${bot.users.size} User`] 
-    bot.user.setStatus('STREAMING'); 
-    bot.user.setUsername("iPresence☆");
-    bot.user.setGame("Ketik ]help Untuk Bantuan", 'https://twitch.tv/forcestopgm'); 
-    console.log(`${bot.user.username} Sedang ONLINE!`); 
-});
 
 bot.on("message", function(message) { 
 
@@ -33,14 +34,14 @@ bot.on("message", function(message) {
     if (command == "help") { 
         var embedhelpmember = new Discord.RichEmbed() 
             .setTitle("💬iPresence Commands\n") 
-            .addField(" 👥General :", "`help`, `botinfo`, `userinfo`, `serverinfo`, `ping`") 
+            .addField(" 👥General :", "`help`, `botinfo`, `userinfo`, `serverinfo`, `ping`, stats") 
             .addField(" 🎶Music :", "`play`, `pause`, `resume`, `skip`, `stop`, `np`, `queue`") 
-            .addField(" 🎉Utility & Fun : ", "`tanya`, `cookie`") 
-            .addField(" 🔏Moderation (Comming Soon!) :", "`test`, `say`, `warn`, `mute`, `unmute`, `kick`, `ban`, `unban`")   
+            .addField(" 🎉Utility & Fun : ", "Not Found**(Error 404)**") 
+            .addField(" 🔏Moderation (Comming Soon!) :", "`ban`, `kick`, `report`")   
             .setColor('RANDOM') 
             .setFooter(`Made By: ForceStop#4120 & Afif_#9369. Pesan Untuk: ${message.author}`) 
             .setTimestamp(); 
-            message.channel.send(`${message.author}, Periksa **Direct Message** Kamu!`) 
+            message.channel.send(`📩${message.author}, Periksa **Direct Message** Kamu!`) 
             message.author.sendMessage(embedhelpmember); 
     };
 
@@ -132,6 +133,166 @@ bot.on("message", function(message) {
         .addField("💻 | API:", api_ms + "ms.", true)
 
         message.channel.send({embed});
+    }
+    
+          if(command == `kick`){
+    
+        //!kick @daeshan askin for it
+    
+        let kUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+        if(!kUser) {
+            let qembed = new Discord.RichEmbed()
+            .setDescription("**:x: | Tidak ada player yang ingin anda kick**")
+            .setColor("#ce0e00")
+            return message.channel.send(qembed);
+        }
+        let kReason = args.join(" ").slice(22);
+        if(!kReason) {
+            let yembed = new Discord.RichEmbed()
+            .setDescription("**:X: | Berikan saya reason**")
+            .setColor("#ce0e00")
+            return message.channel.send(yembed)
+        }
+        if(!message.member.hasPermission("MANAGE_MESSAGES")) {
+            let wembed = new Discord.RichEmbed()
+            .setDescription("**:X: | Anda tidak ada permission untuk menggunakan command ini!**")
+            .setColor("#ce0e00")
+            return message.channel.send(wembed);
+        }
+        if(kUser.hasPermission("MANAGE_MESSAGES")) {
+            let eembed = new Discord.RichEmbed()
+            .setDescription("**Saya tidak ada permission untuk kick player tersebut!**")
+            .setColor("#ce0e00")
+            return message.channel.send(eembed)
+        }
+    
+        let kickEmbed = new Discord.RichEmbed()
+        .setDescription("Kicked Player!")
+        .setColor("#e56b00")
+        .addField("Nama Player", `${kUser}`)
+        .addField("Kicked Oleh", `<@${message.author.id}>`)
+        .addField("Kicked Di", message.channel)
+        .addField("Waktu", message.createdAt)
+        .addField("Reason", kReason);
+    
+        let kickChannel = message.guild.channels.find(`name`, "mod-logs");
+        if(!kickChannel) {
+            let kickChannel = new Discord.RichEmbed()
+            .setDescription("**Tidak ada channel bernama `mod-logs`**")
+            .setColor("#ce0e00")
+            return message.channel.send(kickChannel)
+        }
+    
+        message.guild.member(kUser).kick(kReason);
+        kickChannel.send(kickEmbed);
+
+        message.delete().catch(O_o=>{});
+        message.channel.send(":white_check_mark: | Berhasil kicked player tersebut!");
+    
+    
+        return;
+      }
+    
+      if(command === `ban`){
+    
+        let bUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+        if(!bUser) {
+            let qembed = new Discord.RichEmbed()
+            .setDescription("**:x: | Tidak ada player yang ingin anda banned!**")
+            .setColor("#ce0e00")
+            return message.channel.send(qembed);
+        }
+        let bReason = args.join(" ").slice(22);
+        if(!bReason) {
+            let yembed = new Discord.RichEmbed()
+            .setDescription("**:x: | Berikan saya reason!**")
+            .setColor("#ce0e00")
+            return message.channel.send(yembed);
+        }
+        if(!message.member.hasPermission("MANAGE_MEMBERS")) {
+            let wembed = new Discord.RichEmbed()
+            .setDescription("**:X: | Anda tidak ada permission untuk banned player tersebut!**")
+            .setColor("#ce0e00")
+            return message.channel.send(wembed);
+        }
+        if(bUser.hasPermission("MANAGE_MESSAGES")) {
+            let eembed = new Discord.RichEmbed()
+            .setDescription("**:x: Saya tidak ada permission untuk banned player tersebut!**")
+            .setColor("#ce0e00")
+            return message.channel.send(eembed)
+        }
+    
+        let banEmbed = new Discord.RichEmbed()
+        .setDescription("Banned Player!")
+        .setColor("#bc0000")
+        .addField("Player Name:", `${bUser} with ID ${bUser.id}`)
+        .addField("Banned Oleh:", `<@${message.author.id}> with ID ${message.author.id}`)
+        .addField("Banned Di:", message.channel)
+        .addField("Waktu:", message.createdAt)
+        .addField("Reason", bReason);
+    
+        let incidentchannel = message.guild.channels.find(`name`, "mod-logs");
+        if(!incidentchannel) {
+            let IncidentChannel = new Discord.RichEmbed()
+            .setDescription("**Tidak ada channel bernama `mod-logs`**")
+            .setColor("#ce0e00")
+            return message.channel.send(incidentChannel)
+        }
+    
+        message.guild.member(bUser).ban(bReason);
+        incidentchannel.send(banEmbed);
+
+        message.delete().catch(O_o=>{});
+        message.channel.send(":white_check_mark: | Berhasil report banned player tersebut!");
+    
+    
+    
+        return;
+       }
+    
+    
+      if(command === `report`){
+    
+        let rUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+        if(!rUser) {
+            let qembed = new Discord.RichEmbed()
+            .setDescription("**Tidak ada player yang ingin anda report.**")
+            .setColor("#ce0e00")
+            return message.channel.send(qembed);
+        }
+    
+        let rreason = args.join(" ").slice(22);
+        if(!rreason) {
+            let yembed = new Discord.RichEmbed()
+            .setDescription("Berikan saya reason!")
+            .setColor("#ce0e00")
+            return message.channel.send(yembed)
+        }
+    
+        let reportEmbed = new Discord.RichEmbed()
+        .setDescription("Reports")
+        .setColor("#15f153")
+        .addField("Nama Player", `${rUser} with ID: ${rUser.id}`)
+        .addField("Reported Oleh", `${message.author} with ID: ${message.author.id}`)
+        .addField("Channel", message.channel)
+        .addField("Waktu", message.createdAt)
+        .addField("Reason", rreason);
+    
+        let reportschannel = message.guild.channels.find(`name`, "reports");
+        if(!reportschannel) {
+            let reportsChannel = new Discord.RichEmbed()
+            .setDescription("**Tidak ada channel bernama `reports`**")
+            .setColor("#ce0e00")
+            return message.channel.send(reportschannel)
+        }
+    
+    
+        message.delete().catch(O_o=>{});
+        reportschannel.send(reportEmbed);
+
+        message.channel.send(":white_check_mark: | Berhasil report player tersebut!");
+    
+        return;
     }
 
 
