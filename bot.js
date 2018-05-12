@@ -5,6 +5,11 @@ const TOKEN = "NDQ0NDI0NzIzMDk1NjE3NTQ2.DdbuWA.gKBfkvAKHhe-G2Fa-_4rkrx3Zng"
 
 var bot = new Discord.Client(); 
 
+bot.on('disconnect', async () => console.log('Saya sedang terputus dari jaringan, sedang menghubungkan...'));
+
+bot.on('reconnecting', async () => console.log('Sukses Menghubungkan Kembali!'));
+
+
 bot.on("ready", function randomStatus() { 
     let status = [`Ketik ]help Untuk Bantuan`, `Wumpy!`, `Quack!`, `On ${bot.guilds.size} Server`, `With ${bot.users.size} User`] 
     bot.user.setStatus('STREAMING'); 
