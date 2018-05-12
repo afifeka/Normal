@@ -34,7 +34,7 @@ bot.on("message", function(message) {
     if (command == "help") { 
         var embedhelpmember = new Discord.RichEmbed() 
             .setTitle("💬iPresence Commands\n") 
-            .addField(" 👥General :", "`help`, `botinfo`, `userinfo`, `serverinfo`, `ping`, stats") 
+            .addField(" 👥General :", "`help`, `botinfo`, `userinfo`, `serverinfo`, `ping`, `stats`, `avatar`") 
             .addField(" 🎶Music :", "`play`, `pause`, `resume`, `skip`, `stop`, `np`, `queue`") 
             .addField(" 🎉Utility & Fun : ", "Not Found**(Error 404)**") 
             .addField(" 🔏Moderation (Comming Soon!) :", "`ban`, `kick`, `report`")   
@@ -294,6 +294,41 @@ bot.on("message", function(message) {
     
         return;
     }
+        if(command == `stats`){
+        let uptimes = (Math.round(bot.uptime / (1000 * 60 * 60))) + " hours, " + (Math.round(bot.uptime / (1000 * 60)) % 60) + " minutes, and " + (Math.round(bot.uptime / 1000) % 60) + " seconds.\n";
+        let cpu = process.cpuUsage().system / 1024 / 1024;
+        let used = process.memoryUsage().heapUsed / 1024 / 1024;
+        const _fs = require("fs");
+        const package = JSON.parse(_fs.readFileSync('./package.json', 'utf-8'));
+
+        let testembed = new Discord.RichEmbed()
+        .setDescription("**STATS**")
+        .setColor("#00fa3d")
+        .addField(":open_file_folder: - Total Server", `${bot.guilds.size} Servers!`)
+        .addField(":satellite: - Total Channels", `${bot.channels.size} Channels!`)
+        .addField(":busts_in_silhouette: - Total Users", `${bot.users.size.toLocaleString()} Users!`)
+        .addField(":bookmark: - Library", "Discord.js")
+        .addField(":desktop: - Version", `${package.version}`)
+        .addField(":floppy_disk: - CPU Terpakai", `${Math.round(cpu * 100) / 100}%`, true)
+        .addField(":file_folder: - Memory Terpakai", `${Math.round(used * 100) / 100} MB`)
+        .addField(":clock9: - Uptime", uptimes)
+        .setTimestamp()
+
+        message.channel.send(testembed)
+    }
+
+    if(command == `avatar`){
+	  
+        const member = message.mentions.members.first() || message.guild.members.get(args[0]) || message.member;
+        const embed = new Discord.RichEmbed()
+        .setColor("RANDOM")
+        .setAuthor(member.user.tag)
+        .setDescription(`[Avatar Link](${member.user.displayAvatarURL})`)
+        .setImage(member.user.displayAvatarURL);
+    
+        message.channel.send(embed);
+    
+    }     
 
 
 });
