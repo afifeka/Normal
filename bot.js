@@ -8,7 +8,7 @@ var bot = new Discord.Client();
 bot.on("ready", async () => {
     console.log(`${bot.user.username} Kembali Online!`); 
       function randomStatus() {
-          let status = [`Ketik ]help Untuk Bantuan`, `With ${bot.user.size} User!`, `On ${bot.guilds.size} Server!`]
+          let status = [`Ketik ]help Untuk Bantuan`, `With ${bot.users.size.toLocaleString()} User!`, `On ${bot.guilds.size} Server!`]
           let rstatus = Math.floor(Math.random() * status.length);
           bot.user.setActivity(status[rstatus], {type: 'STREAMING' , url: 'https://www.twitch.tv/afif_123'});
   
