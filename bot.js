@@ -8,7 +8,6 @@ var bot = new Discord.Client();
 bot.on("ready", function randomStatus() { 
     let status = [`Ketik -help Untuk Bantuan`, `Wumpy!`, `Quack!`, `On ${bot.guilds.size} Server`, `With ${bot.users.size} User`] 
     bot.user.setStatus('STREAMING'); 
-    bot.user.setUsername("iPresence☆");
     bot.user.setGame("Ketik -help Untuk Bantuan", 'https://twitch.tv/forcestopgm'); 
     console.log(`${bot.user.username} Sedang ONLINE!`); 
 });
@@ -27,11 +26,11 @@ bot.on("message", function(message) {
 
     if (command == "help") { 
         var embedhelpmember = new Discord.RichEmbed() 
-            .setDescription("💬**iPresence Commands**") 
-            .addField(" 👥General :", "`help`, `botinfo`, `userinfo`, `serverinfo`, `pp`, `ping`") 
+            .setTitle("💬iPresence Commands\n") 
+            .addField(" 👥General :", "`help`, `botinfo`, `userinfo`, `serverinfo`, `ping`") 
             .addField(" 🎶Music :", "`play`, `pause`, `resume`, `skip`, `stop`, `np`, `queue`") 
-            .addField(" 🎉Utility & Fun : ", "`weather`, `tanya`, `cookie`") 
-            .addField(" 🔏Moderation :", "`test`, `say`, `warn`, `mute`, `unmute`, `kick`, `ban`, `unban`")   
+            .addField(" 🎉Utility & Fun : ", "`tanya`, `cookie`") 
+            .addField(" 🔏Moderation (Comming Soon!) :", "`test`, `say`, `warn`, `mute`, `unmute`, `kick`, `ban`, `unban`")   
             .setColor('RANDOM') 
             .setFooter(`Made By: ForceStop#4120 & Afif_#9369. Pesan Untuk: ${message.author}`) 
             .setTimestamp(); 
@@ -111,7 +110,23 @@ bot.on("message", function(message) {
              .setColor('RANDOM') 
              .setFooter(`• Pesan Untuk: ${message.author.tag}`);  
              return message.channel.send(serverembed); 
-    };
+    }
+
+    if (command == "ping") {
+        message.react("✅")
+        var lat_ms = `${Date.now() - message.createdTimestamp}`
+        var api_ms = (bot.ping).toFixed(2)
+
+        const embed = new Discord.RichEmbed()
+        .setColor("RANDOM")
+        .setFooter("© IPresence | discord.js")
+        .setTimestamp()
+        .setDescription("You Beep, I Boop.")
+        .addField("📁 | Latency:", lat_ms + "ms.", true)
+        .addField("💻 | API:", api_ms + "ms.", true)
+
+        message.channel.send({embed});
+    }
 
 
 });
