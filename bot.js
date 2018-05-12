@@ -56,7 +56,7 @@ bot.on("message", function(message) {
             .addField(" 📝 Bio", "iPresence BOT, Developed By : ForceStop#4120 & ") 
             .setThumbnail(bicon) 
             .setColor('RANDOM') 
-            .setTimestamp() 
+            .setTimestamp()
             .setFooter(`• Pesan Untuk: ${message.author.tag}`); 
             message.channel.send(embedhelpmember); 
     };
@@ -71,7 +71,7 @@ bot.on("message", function(message) {
             .addField(" 🕘 Dibuat Pada", `${message.author.createdAt}`, true) 
             .setThumbnail(bicon) 
             .setColor('RANDOM') 
-            .setTimestamp() 
+            .setTimestamp()
             .setFooter(`• Pesan Untuk: ${message.author.tag}`);  
             message.channel.send(embedhelpmember) 
     };
